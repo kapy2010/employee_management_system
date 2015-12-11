@@ -8,11 +8,10 @@ var Email = mongoose.SchemaTypes.Email;
 
 var EmployeeSchema = new Schema({
   email: { type: Email, required: true, index: { unique: true } },
-  password: { type: String, required: true, select: false },
   firstname: String,
   lastname: String,
   phone: String,
-  status: { type: String, default: 'InActive' }
+  active: { type: Boolean, default: false }
 });
 
 EmployeeSchema.methods.comparePassword = function(password) {
