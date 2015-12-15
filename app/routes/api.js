@@ -15,9 +15,12 @@ module.exports = function(app, express) {
         var sampleUser = new User();
         sampleUser.email = 'chris@gmail.com';
         sampleUser.password = 'supersecret';
+        sampleUser.admin = true;
         sampleUser.save();
-      } else {
-        console.log(user);
+      res.json({
+        success: true,
+        message: 'Sample user created!'
+        });
       }
     });
   });
@@ -26,7 +29,7 @@ module.exports = function(app, express) {
   apiRouter.post('/authenticate', function(req, res) {
       User.findOne({
         email: req.body.email
-      }).select('email password').exec(function(err, user) {
+      }).select('email admin password').exec(function(err, user) {
         if (err) throw err;
 
         if (!user) {
@@ -43,7 +46,8 @@ module.exports = function(app, express) {
             });
           } else {
             var token = jwt.sign({
-              email: user.email
+              email: user.email,
+              admin: user.admin
             }, superSecret, {
               expiresInMinutes: 1440
             });
@@ -71,10 +75,6 @@ module.exports = function(app, express) {
             });
           } else {
             req.decoded = decoded;
-            User.findOne({ 'email': decoded['email'] }, function(err, user) {
-              if (err) res.send(err);
-              req.is_admin = user.admin;
-            });
             next();
           }
         });
@@ -90,7 +90,7 @@ module.exports = function(app, express) {
 
       // add new user
       .post(function(req, res) {
-        if (!req.is_admin) {
+        if (!req.decoded['admin']) {
           return res.json({ success: false, message: 'Current user not admin!' });
         }
 
@@ -141,15 +141,15 @@ email already exists.' });
         User.findById(req.params.user_id, function(err, user) {
           if (err) res.send(err);
 
-          if (!req.is_admin && !user.active) {
+          if (!req.decoded['admin'] && !user.active) {
             return res.json({ success: false,
               message: 'Current user not admin!' });
           }
 
           if (req.body.firstname) user.firstname = req.body.firstname;
-          if (req.body.secondname) user.secondname = req.body.secondname;
+          if (req.body.lastname) user.lastname = req.body.lastname;
           if (req.body.phone) user.phone = req.body.phone;
-          if (req.body.active && req.is_admin) user.active = req.body.active;
+          if (req.body.active && req.decoded['admin']) user.active = req.body.active;
 
           user.save(function(err) {
             if (err) res.send(err);
@@ -161,7 +161,7 @@ email already exists.' });
 
       // delete an employee
       .delete(function(req, res) {
-        if (!req.is_admin) {
+        if (!req.decoded['admin']) {
           return res.json({ success: false, message: 'Current user not admin!' });
         }
 
