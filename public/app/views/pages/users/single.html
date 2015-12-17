@@ -1,0 +1,67 @@
+<div class="page-header">
+	<h1 ng-if="user.type == 'create'">Create Employee</h1>
+	<h1 ng-if="user.type == 'edit'">Edit Employee</h1>
+</div>
+
+<form class="form-horizontal" ng-submit="user.saveUser()">
+
+	<div class="form-group">
+		<label class="col-sm-2 control-label">Email</label>
+		<div class="col-sm-6">
+			<input type="text" class="form-control" ng-model="user.userData.email">
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-sm-2 control-label">Password</label>
+		<div class="col-sm-6">
+			<input type="password" class="form-control" ng-model="user.userData.password">
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-sm-2 control-label">Firstname</label>
+		<div class="col-sm-6">
+			<input type="text" class="form-control" ng-model="user.userData.firstname">
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-sm-2 control-label">Lastname</label>
+		<div class="col-sm-6">
+			<input type="text" class="form-control" ng-model="user.userData.lastname">
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-sm-2 control-label">Phone</label>
+		<div class="col-sm-6">
+			<input type="text" class="form-control" ng-model="user.userData.phone">
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-sm-2 control-label">Active</label>
+		<div class="col-sm-6">
+			<input type="text" class="form-control" ng-model="user.userData.active">
+		</div>
+	</div>
+
+	<div class="form-group">
+	<div class="col-sm-offset-2 col-sm-6">
+		<button type="submit" class="btn btn-success btn-lg btn-block" ng-if="user.type == 'create'">Create Employee</button>
+		<button type="submit" class="btn btn-success btn-lg btn-block" ng-if="user.type == 'edit'">Update Employee</button>
+	</div>
+	</div>
+
+</form>
+
+<div class="row show-hide-message" ng-show="user.message">
+	<div class="col-sm-6 col-sm-offset-2">
+
+		<div class="alert alert-info">
+			{{ user.message }}
+		</div>
+
+	</div>
+</div>

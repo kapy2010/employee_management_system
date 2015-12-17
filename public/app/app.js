@@ -1,18 +1,9 @@
-angular.module('userApp', [
-  'ngAnimate',
-  'app.routes',
-  'authService',
-  'mainCtrl',
-  'userCtrl',
-  'userService'
-]);
+angular.module('userApp', ['ngAnimate', 'app.routes', 'authService', 'mainCtrl', 'userCtrl', 'userService'])
 
-.controller('mainController', function($http) {
+// application configuration to integrate token into requests
+.config(function($httpProvider) {
 
-  var vm = this;
+	// attach our auth interceptor to the http requests
+	$httpProvider.interceptors.push('AuthInterceptor');
 
-  $http.get('/emp/users')
-    .then(function(data) {
-      vm.users = data.users;
-    });
 });
