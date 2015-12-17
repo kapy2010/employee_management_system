@@ -22,7 +22,7 @@
 			<th>Firstname</th>
 			<th>Lastname</th>
 			<th>Phone</th>
-			<th>Valid</th>
+			<th>Active</th>
 			<th class="col-sm-2"></th>
 		</tr>
 	</thead>
@@ -33,7 +33,8 @@
 			<td>{{ person.firstname }}</td>
 			<td>{{ person.lastname }}</td>
 			<td>{{ person.phone }}</td>
-			<td>{{ person.valid }}</td>
+			<td ng-if="person.active == true"><span class="glyphicon glyphicon-ok"></span></td>
+			<td ng-if="person.active == false"><span class="glyphicon glyphicon-remove"></span></td>
 			<td class="col-sm-2">
 				<a ng-href="/users/{{ person._id }}" class="btn btn-danger">Edit</a>
 				<a href="#" ng-click="user.deleteUser(person._id)" class="btn btn-primary">Delete</a>

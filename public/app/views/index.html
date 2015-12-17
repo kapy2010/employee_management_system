@@ -48,7 +48,7 @@ oute.min.js"></script>
 		</ul>
 		<ul class="nav navbar-nav navbar-right">
 			<li ng-if="!main.loggedIn"><a href="/login">Login</a></li>
-			<li ng-if="main.loggedIn" class="navbar-text">Hello {{ main.user.firstname }}!</li>
+			<li ng-if="main.loggedIn" class="navbar-text">Hello {{ main.user.email }}!</li>
 			<li ng-if="main.loggedIn"><a href="#" ng-click="main.doLogout()">Logout</a></li>
 		</ul>
 	</div>
