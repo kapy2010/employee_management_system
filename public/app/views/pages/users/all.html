@@ -17,7 +17,6 @@
 <table class="table table-bordered table-striped" ng-show="user.users">
 	<thead>
 		<tr>
-			<th>_id</th>
 			<th>Email</th>
 			<th>Firstname</th>
 			<th>Lastname</th>
@@ -28,7 +27,6 @@
 	</thead>
 	<tbody>
 		<tr ng-repeat="person in user.users">
-			<td>{{ person._id }}</td>
 			<td>{{ person.email }}</td>
 			<td>{{ person.firstname }}</td>
 			<td>{{ person.lastname }}</td>
