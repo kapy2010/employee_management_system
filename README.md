@@ -12,3 +12,4 @@ Add employees and manage their information
 
 1. `npm install`
 2. `bower install`
+3. `nodemon server.js`
