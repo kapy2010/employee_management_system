@@ -26,7 +26,7 @@ angular.module('userCtrl', ['userService'])
 			.success(function(data) {
 
 				// get all users to update the table
-				// you can also set up your api 
+				// you can also set up your api
 				// to return the list of users with the delete call
 				User.all()
 					.success(function(data) {
@@ -41,7 +41,7 @@ angular.module('userCtrl', ['userService'])
 
 // controller applied to user creation page
 .controller('userCreateController', function(User) {
-	
+
 	var vm = this;
 
 	// variable to hide/show elements of the view
@@ -60,13 +60,13 @@ angular.module('userCtrl', ['userService'])
 				vm.userData = {};
 				vm.message = data.message;
 			});
-			
-	};	
+
+	};
 
 })
 
 // controller applied to user edit page
-.controller('userEditController', function($routeParams, User) {
+.controller('userEditController', function($routeParams, User, Upload) {
 
 	var vm = this;
 
@@ -81,12 +81,50 @@ angular.module('userCtrl', ['userService'])
 			vm.userData = data;
 		});
 
+	vm.uploadPhoto = function(file) {
+		vm.processing = true;
+		vm.message = '';
+
+		Upload.upload({
+			url: '/api/uploads',
+			method: 'POST',
+			fields: {
+				id: vm.userData._id,
+				type: 'photo'
+			},
+			file: file,
+			fileFormDataName: 'photo'
+		}).success(function(data) {
+			vm.processing = false;
+			vm.message = data.message;
+		});
+	};
+
+	vm.uploadAadhar = function(file) {
+		vm.processing = true;
+		vm.message = '';
+
+		Upload.upload({
+			url: '/api/uploads',
+			method: 'POST',
+			fields: {
+				id: vm.userData._id,
+				type: 'aadhar'
+			},
+			file: file,
+			fileFormDataName: 'aadhar'
+		}).success(function(data) {
+			vm.processing = false;
+			vm.message = data.message;
+		});
+	};
+
 	// function to save the user
 	vm.saveUser = function() {
 		vm.processing = true;
 		vm.message = '';
 
-		// call the userService function to update 
+		// call the userService function to update
 		User.update($routeParams.user_id, vm.userData)
 			.success(function(data) {
 				vm.processing = false;

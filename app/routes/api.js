@@ -1,6 +1,19 @@
 var User = require('../models/user');
 var jwt = require('jsonwebtoken');
 var config = require('../../config');
+var multer = require('multer');
+
+var storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    cb(null, 'public/assets/documents')
+  },
+  filename: function(req, file, cb) {
+    console.log(req);
+    cb(null, req.body.id + '_' + req.body.type + '.pdf')
+  }
+});
+
+var upload = multer({ storage: storage });
 
 var superSecret = config.secret;
 
@@ -175,6 +188,13 @@ email already exists.' });
   // api endpoint to get user information
   apiRouter.get('/me', function(req, res) {
     res.send(req.decoded);
+  });
+
+  apiRouter.post('/uploads', upload.single('file'), function(req, res, next) {
+    res.json({
+      success: true,
+      message: 'Successfully uploaded!'
+    });
   });
 
   return apiRouter;

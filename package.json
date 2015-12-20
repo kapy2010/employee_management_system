@@ -16,6 +16,7 @@
     "kerberos": "0.0.17",
     "mongoose": "^4.2.9",
     "mongoose-types": "^1.0.3",
-    "morgan": "^1.6.1"
+    "morgan": "^1.6.1",
+    "multer": "^1.1.0"
   }
 }

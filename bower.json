@@ -12,6 +12,7 @@
     "**/.*",
     "node_modules",
     "public/bower_components",
+    "public/assets/documents",
     "test",
     "tests"
   ],
